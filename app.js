@@ -4,7 +4,9 @@ const mysql = require('mysql2');
 const db = require("./db/connection");
 
 // will view all employees from db
-function viewEmployees
+const viewEmployees = (data) {
+    const getData = `SELECT E.id, E.first_name, E.last_name`
+};
 
 // will view all departments from db
 
@@ -18,7 +20,7 @@ const init = function () {
             {
                 type: "list",
                 name: "etracker",
-                message: "Please make a selection below using by using UP/DOWN arrows",
+                message: "Please make a selection below",
                 choices: [
                     "View All Employees",
                     "Add Employee",

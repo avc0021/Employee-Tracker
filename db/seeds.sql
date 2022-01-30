@@ -14,7 +14,7 @@ VALUES
 (4, 'Accountant', 125000, 3),
 (5, 'Lawyer', 190000, 4);
 
-INSERT INTO employee (id, first_name, last_name, role_id)
+INSERT INTO employee (id, first_name, last_name, job_id)
 VALUES
 (1, 'Solid', 'Snake', 1),
 (2, 'Samus', 'Aran', 3),

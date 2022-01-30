@@ -19,7 +19,7 @@ CREATE TABLE employee(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
-    role_id INTEGER,
-    FOREIGN KEY (role_id) REFERENCES job(id)
+    job_id INTEGER,
+    FOREIGN KEY (job_id) REFERENCES job(id)
 
 );

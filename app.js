@@ -28,8 +28,14 @@ const init = function () {
             if (data.etracker === "View All Employees") {
                 viewEmployees(data.etracker);
             }
+            if (data.etracker === "Add Employee") {
+                addEmployee(data.etracker);
+            }
             if (data.etracker === "View All Roles") {
                 viewRoles(data.etracker);
+            }
+            if (data.etracker === "Add Role") {
+                addRole(data.etracker);
             }
             if (data.etracker === "View All Departments") {
                 viewDepartments(data.etracker);
@@ -45,7 +51,7 @@ const init = function () {
 
 init();
 
-// will view all employees from db
+// view all employees from db
 function viewEmployees() {
     let employees = `SELECT * FROM employee`;
     console.log(`EMPLOYEE TABLE`);
@@ -58,7 +64,7 @@ function viewEmployees() {
     });
 };
 
-// will view all departments from db
+// view all departments from db
 function viewDepartments () {
     const dept = `SELECT * FROM department`;
     console.log(`DEPARTMENT TABLE`);
@@ -68,7 +74,7 @@ function viewDepartments () {
             console.table(results);
             return init();
     });
-  };
+};
 
 // add department
 function addDepartment() {
@@ -77,13 +83,13 @@ function addDepartment() {
             {
                 type: "input",
                 name: "adddept",
-                message: "Please enter the name of your new department",
+                message: "Please enter the name of your new department.",
                 validate: adddept => {
                     if(adddept){
                         return true;
                     }
                     else {
-                        console.log ("Please enter department name");
+                        console.log ("Please enter department name.");
                         return false;
                     }
                 }
@@ -100,7 +106,7 @@ function addDepartment() {
         });
 }
 
-// will view all roles from db
+// view all roles from db
 function viewRoles () {
     const roles = `SELECT job.id, job.title, job.salary, department.name 
                    AS Department FROM job 
@@ -113,3 +119,66 @@ function viewRoles () {
             return init();
     });
   };
+
+// add new job role
+function addRole() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "title",
+                message: "Please enter the name of your new role.",
+                validate: addrole => {
+                    if(addrole){
+                        return true;
+                    }
+                    else {
+                        console.log ("Please enter new role name.");
+                        return false;
+                    }
+                }
+            },
+            {
+                type: "input",
+                name: "salary",
+                message: "What is the salary for this role?",
+                validate: salary => {
+                    if(salary){
+                        return true;
+                    }
+                    else {
+                        console.log ("Please enter salary amount.");
+                        return false;
+                    }
+                }
+            },
+            {
+                type: "input",
+                name: "department",
+                message: "What department does this role belong too?",
+                validate: department => {
+                    if(department){
+                        return true;
+                    }
+                    else {
+                        console.log ("Please enter department related to this role.");
+                        return false;
+                    }
+                }
+            },
+        ])
+        .then((data) => {
+            const addToTable = `INSERT INTO job(title, salary, department_id) VALUES(?,?,?)`;
+            const roleArray = [data.title, data.salary, data.department];
+
+            db.query(addToTable, roleArray, (err, res) => {
+                if (err) {
+                console.log(err)
+                throw err;
+                } else {
+                    return viewRoles();
+                }
+            });
+
+        })
+}
